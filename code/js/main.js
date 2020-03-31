@@ -1,6 +1,7 @@
 
 
 
+
 $(document).ready(function () {
     
     function renderMovies (movies) { 
@@ -38,9 +39,7 @@ $(document).ready(function () {
     
     $('#moviesSearchForm').on('submit', function (e) {
     
-        var searchMovies = $('#searchMovies').val()
-
-        console.log(searchMovies, '!!!!!')
+       
 
         // renderMovies(searchMovies)
 
@@ -52,11 +51,31 @@ $(document).ready(function () {
 
         if ($test2) {
 
-            renderMovies(movieData)
+            
 
         } else {console.log('need search Movies')}
     
         e.preventDefault()
+
+        var searchString = $('#searchMovies').val()
+
+        console.log(searchString, '!!!!!')
+
+       let URLEncodedSearchString = encodeURIComponent(searchString)
+       
+       console.log(URLEncodedSearchString)
+
+       axios.get("http://www.omdbapi.com/?apikey=f631569a&s=" + URLEncodedSearchString)
+        .then(function (response) {
+            var results = response.data.Search
+            console.log('here is the response from the OMDB API:')
+            console.log(results)
+            renderMovies(results)
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+            return results
+        })
+
+
     })
 
    

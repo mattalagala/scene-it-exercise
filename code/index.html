@@ -22,26 +22,53 @@
       <div class="col-12 search">
         <form id="moviesSearchForm">
           <div class="input-group input-group-lg">
-            <input class="form-control search-bar" placeholder="Search for a movie …">
-            <button class="btn btn-primary input-group-btn" type="submit">Search</button>
+            <input id="searchMovies" class="form-control search-bar" placeholder="Search for a movie …"type='text'>
+            <button class="btn btn-primary input-group-btn" id="buttonID" type="submit" onclick="saveToWatchlist(currentMovie.imdbID)">Search</button>
           </div>
         </form>
+        <button class="btn btn-primary input-group-btn" id="watchlistButton" type="button" onclick="window.location.href='http://127.0.0.1:5500/code/watchlist.html';">Go To Watchlist</a>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 results">
+    <div class='row'id="movieRow">
+      
         <!-- TODO: movies will show up here -->
       </div>
     </div>
   </div><!-- end .container -->
 
+  <script>
+    function saveToWatchlist (imdbID) {
+        
+        console.log("savetoWatchlist function fired")
+
+            let movie = movieData.find(function (currentMovie) {
+                
+                return currentMovie.imdbID === imdbID
+            })
+            console.log(movie, "CL of movie")
+
+            let watchlistJSON = localStorage.getItem('watchlist')
+            
+            let watchlist = JSON.parse(watchlistJSON)
+
+            if (watchlist === null) {
+
+                watchlist = []
+
+            }
+
+            watchlist.push(movie)
+            watchlistJSON = JSON.stringify(watchlist)
+            localStorage.setItem('watchlist', watchlistJSON)
+    }
+  </script>
   <script src="js/libs/jquery-3.4.1.min.js"></script>
   <script src="js/libs/popper-1.14.3.min.js"></script>
   <script src="js/libs/bootstrap-4.1.3.min.js"></script>
   <script src="js/libs/axios-0.19.2.min.js"></script>
 
   <script src="js/movies-mock-data.js"></script>
-  <script src="js/index.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>

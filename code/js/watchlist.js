@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
 
    
@@ -27,18 +25,9 @@ $(document).ready(function () {
                         </div>
                     </div>
                 `)
-            
-                
-           
             console.log(currentMovie)
             return currentMovie
-
-   
-   
-   
       }) 
    }
-
    renderMovies(itemsToJSON)
-
 })

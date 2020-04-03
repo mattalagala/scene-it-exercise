@@ -1,13 +1,24 @@
 
+// Document ready function to load js files first
 
-
-
-$(document).ready(function () {
+$(document).ready(function () { // this function contains multiple functions for rendering movies
+    
+    console.log( "Document Loaded!" )
     
     function renderMovies (movies) { 
+
+        // This function creates a local storage item (like the watchlist in Part 2) called 
+        // resultDataStored as a string. This is needed to retrieve the imdbID for the saveToWatchlist (). 
+        const resultData = movies
+        resultDataStored = JSON.stringify(resultData)
+        localStorage.setItem('resultData', resultDataStored)
+        // 
+
+        console.log(resultData, "resultData created")
    
-        var moviesHTML =  movies.map( function buildSingleMovie (currentMovie) {
-        
+        // This is the rendering of each card as the .map function iterates through movies. 
+        var moviesHTML =  movies.map( function buildSingleMovie (currentMovie) { 
+            
                 $('#movieRow').append(`
                     <div class="col-sm-4" class="movies-container id='movContainer">
                         <div class="card" class="movie">
@@ -16,47 +27,54 @@ $(document).ready(function () {
                                 <h5 class="card-title">${currentMovie['Title']}</h5>
                                 <p class="card-text">${currentMovie['Year']}</p>
                                 <button type='button' class="btn btn-primary" onclick="saveToWatchlist('${currentMovie.imdbID}')">Add Movie</button>
-                              
-                            </div>
+                            <div>
                         </div>
                     </div>
                 `)
-            
-                
-           
             console.log(currentMovie)
             return currentMovie
-    
-    }) 
-    console.log(moviesHTML, 'this is CL of moviesHTML')
-    
-    // return moviesHTML.join('')
-    
-    }
-
-    console.log( "Document Loaded!" )
-    
-    
-    $('#moviesSearchForm').on('submit', function (e) {
-    
-       
-
-        // renderMovies(searchMovies)
-
         
+        }) 
 
-        var $test2 = movieData[9]['Title']
-
-        console.log($test2, "?????") 
-
-        if ($test2) {
-
-            
-
-        } else {console.log('need search Movies')}
+            console.log(moviesHTML, 'this is CL of moviesHTML')    
+    }
     
-        e.preventDefault()
+    // I couldn't get this function to work in the main.js file. I had to move it to index.html as a script.
 
+    // function saveToWatchlist (imdbID) {
+        
+    //     console.log("savetoWatchlist function fired")
+    
+    //         let movie = movieData.find(function (currentMovie) {
+    //             return currentMovie.imdbID === imdbID
+    //         })
+    //         console.log(movie, "CL of movie")
+            
+    //         let watchlistJSON = localStorage.getItem('watchlist')
+            
+    //         let watchlist = JSON.parse(watchlistJSON)
+    
+    //         if (watchlist === null) {
+    
+    //             watchlist = []
+    
+    //         }
+    
+    //         watchlist.push(movie)
+    //         watchlistJSON = JSON.stringify(watchlist)
+    //         localStorage.setItem('watchlist', watchlistJSON)
+            
+    
+    // }
+    $('#buttonID').on('submit', function submitreload () {
+        
+        location.reload(true)
+        console.log(reload, 'RELOAD FIRED')
+        
+    })
+    
+    $('#moviesSearchForm').on('submit', function submitSearchForm (e) {
+    
         var searchString = $('#searchMovies').val()
 
         console.log(searchString, '!!!!!')
@@ -75,37 +93,16 @@ $(document).ready(function () {
             return results
         })
 
-
-    })
-
-   
-
-    // function saveToWatchlist (imdbID) {
+        
     
-    //     console.log("savetoWatchlist function fired")
+        // location.reload(true)
 
-    //         let movie = movieData.find(function (currentMovie) {
-                
-    //             return currentMovie.imdbID === imdbID
-    //         })
-    //         console.log(movie, "CL of movie")
-
-    //         let watchlistJSON = localStorage.getItem('watchlist')
-            
-    //         let watchlist = JSON.parse(watchlistJSON)
-
-    //         if (watchlist === null) {
-
-    //             watchlist = []
-
-    //         }
-
-    //         watchlist.push(movie)
-    //         watchlistJSON = JSON.stringify(watchlist)
-    //         localStorage.setItem('watchlist', watchlistJSON)
-            
-
-    // }
+        e.preventDefault()
+    })
+    
+   
+    
+    
 
     
     
